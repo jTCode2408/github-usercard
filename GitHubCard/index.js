@@ -3,6 +3,10 @@
            https://api.github.com/users/<your name>
 */
 
+
+
+
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -45,6 +49,75 @@ const followersArray = [];
 </div>
 
 */
+
+function gitCards (data){
+  const cardHolder = document.createElement('div');
+  const newImg = document.createElement('img');
+  const newInfo = document.createElement('div');
+  const newName = document.createElement('h3');
+  const newUsername = document.createElement('p');
+  const newLocation = document.createElement('p');
+  const newProfile = document.createElement('p');
+  const newPageLink = document.createElement('a');
+  const newFollowers = document.createElement('p');
+  const newFollowing = document.createElement('p');
+  const newBio = document.createElement('p');
+
+  
+
+  cardHolder.classList.add('card');
+  newInfo.classList.add ('card-info');
+  newName.classList.add('name');
+  newUsername.classList.add ('username');//class add
+
+  
+  cardHolder.appendChild(newImg);
+  cardHolder.appendChild (newInfo);
+  newInfo.appendChild (newName);
+  newInfo.appendChild (newUsername);
+  newInfo.appendChild (newLocation);
+  newInfo.appendChild (newProfile);
+  newInfo.appendChild (newPageLink);
+  newInfo.appendChild (newFollowers);
+  newInfo.appendChild (newFollowing);
+  newInfo.appendChild (newBio);
+
+  newProfile.appendChild(newPageLink); //append children
+
+
+ newImg.src = data.avatar_url;
+ newLocation.textContent = `Location: ${data.location}`;
+ newName.textContent = data.name;
+ newUsername.textContent = data.login;
+ newProfile.textContent ='Profile:';
+ newPageLink.textContent = data.url;
+ newFollowers.textContent = `Followers: ${data.followers}`;
+ newFollowing.textContent = `Following: ${data.following}`;
+ newBio.textContent = data.bio;
+
+
+
+ //add content to show on page
+
+return cardHolder;
+
+}//compenent function end
+
+
+const cardBody = document.querySelector('.cards');
+
+axios.get('https://api.github.com/users/jTCode2408')
+  .then(response => {
+    console.log(response.data);
+     const newCard = gitCards(response.data);
+     cardBody.appendChild(newCard);
+ })
+ .catch (error => {
+   console.log (error);
+ })
+
+
+
 
 /* List of LS Instructors Github username's: 
   tetondan
