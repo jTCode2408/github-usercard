@@ -19,7 +19,7 @@
 */
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
-          follow this link in your browser https://api.github.com/users/<Your github name>/followers 
+          follow this link in your browser https://api.github.com/users/jTCode2408/followers 
           , manually find some other users' github handles, or use the list found 
           at the bottom of the page. Get at least 5 different Github usernames and add them as
           Individual strings to the friendsArray below.
@@ -28,7 +28,13 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  'asahmed93',
+  'aalvinlin',
+  'maggieprice',
+  'nicbongo',
+  'anamonteiro430'
+];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -77,11 +83,9 @@ function gitCards (data){
   newInfo.appendChild (newUsername);
   newInfo.appendChild (newLocation);
   newInfo.appendChild (newProfile);
-  newInfo.appendChild (newPageLink);
   newInfo.appendChild (newFollowers);
   newInfo.appendChild (newFollowing);
   newInfo.appendChild (newBio);
-
   newProfile.appendChild(newPageLink); //append children
 
 
@@ -89,8 +93,8 @@ function gitCards (data){
  newLocation.textContent = `Location: ${data.location}`;
  newName.textContent = data.name;
  newUsername.textContent = data.login;
- newProfile.textContent ='Profile:';
- newPageLink.textContent = data.url;
+ newProfile.textContent ='Profile: ';
+ newPageLink.src = `${data.html_url}`;
  newFollowers.textContent = `Followers: ${data.followers}`;
  newFollowing.textContent = `Following: ${data.following}`;
  newBio.textContent = data.bio;
@@ -109,6 +113,7 @@ const cardBody = document.querySelector('.cards');
 axios.get('https://api.github.com/users/jTCode2408')
   .then(response => {
     console.log(response.data);
+  
      const newCard = gitCards(response.data);
      cardBody.appendChild(newCard);
  })
@@ -116,6 +121,14 @@ axios.get('https://api.github.com/users/jTCode2408')
    console.log (error);
  })
 
+
+    followersArray.forEach(user => {
+      axios.get(`https://api.github.com/users/${user}`)
+  .then (response => {
+const friendsCards = gitCards(response.data);
+cardBody.appendChild(friendsCards);
+    })
+  })
 
 
 
