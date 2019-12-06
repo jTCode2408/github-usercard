@@ -86,6 +86,8 @@ function gitCards (data){
   newInfo.appendChild (newFollowers);
   newInfo.appendChild (newFollowing);
   newInfo.appendChild (newBio);
+
+  newProfile.textContent = 'Profile: ';
   newProfile.appendChild(newPageLink); //append children
 
 
@@ -93,8 +95,9 @@ function gitCards (data){
  newLocation.textContent = `Location: ${data.location}`;
  newName.textContent = data.name;
  newUsername.textContent = data.login;
- newProfile.textContent ='Profile: ';
- newPageLink.src = `${data.html_url}`;
+ 
+ newPageLink.textContent = data.html_url;
+ newPageLink.href= data.html_url;
  newFollowers.textContent = `Followers: ${data.followers}`;
  newFollowing.textContent = `Following: ${data.following}`;
  newBio.textContent = data.bio;
